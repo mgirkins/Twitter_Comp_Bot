@@ -9,6 +9,7 @@ var client = new Twitter({
 
 var params = {q: 'retweet to win rt RT competition', retweeted_status: 'null', result_type: 'recent', count: '50', lang: 'en' };
 
+//loops for ever every half an hour.
 function getTweet(){
 	client.get('search/tweets', params, function(error, tweets, response){
 		if (!error){
@@ -30,6 +31,7 @@ function getTweet(){
 	}
 )};
 
+//retweets a tweet when passed a valid tweet id.
 function retweet(tid){
 	client.post('statuses/retweet/'+ tid, function(error, tweet, response){
 		if (!error) {
@@ -41,6 +43,8 @@ function retweet(tid){
 	});
 	
 }
+
+// favourites a tweet given a valid tweet id.
 function favourite(n){
 	client.post('favorites/create', {id:n}, function(error, tweet, response){
 		if (response != null){
@@ -52,6 +56,8 @@ function favourite(n){
 	});
 	
 }
+
+//follows an account based on being passed a user id.
 function follow(u){
 
 	client.post('friendships/create', {user_id:u}, function(error, user, response){
@@ -64,12 +70,15 @@ function follow(u){
 	});
 	
 }
+
+//hangs the program for a specified time in order to avoid reaching twitter rate limits and attempting to retweet your own tweets.
 function sleep(miliseconds) {
     var currentTime = new Date().getTime();
     while (currentTime + miliseconds >= new Date().getTime()) {
     }
             
 }
+
 getTweet();
 
 
